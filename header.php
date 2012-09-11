@@ -1,4 +1,8 @@
 <?php
+	global $time_start;
+
+	$time_start = microtime(true);
+	
 /**
  * The Header for our theme.
  *
@@ -56,7 +60,13 @@
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
 <![endif]-->
 
-<?php wp_head(); ?>
+<?php wp_head(); 
+	$options = get_option('wpb_options');
+	
+	if(strlen($options['headcode']) > 0) {
+		echo $options['headcode'];
+	}
+?>
 </head>
 
 <body <?php body_class(); ?>>

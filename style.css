@@ -1,3 +1,15 @@
+/*
+Theme Name: WP-Bootstrap
+Theme URI: http://github.com/tristanseifert/wp-bootstrap
+Description: A simple theme based on Twitter's Bootstrap framework to be used as a sort of blank canvas with many options for customisation.
+Author: Tristan Seifert
+Author URI: http://tristan.squee.co/
+Version: 1.0
+
+License: MIT License
+License URI:
+*/
+
 html, body {
 	background-color: #eee !important;
 }

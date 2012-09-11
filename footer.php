@@ -13,7 +13,20 @@
 
 		<footer>
 			<p>
-				&copy; 2012 Tristan Seifert
+			<?php
+				global $time_start;
+				$time_end = microtime(true);
+				$time = $time_end - $time_start;
+				echo "Executed in " . round($time, 3) . " seconds.";
+				
+				$default_options = array('copytxt' => '&copy; ' . date('Y') . ": " .  get_bloginfo('name'));
+				$options = get_option('wpb_options', $default_options);
+				
+				if(strlen($options['copytxt']) > 0) {
+					echo " | ";
+					echo $options['copytxt'];
+				}
+			?>
 			</p>
 		</footer>
 	</div><!-- #container -->

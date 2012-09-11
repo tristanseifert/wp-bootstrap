@@ -47,10 +47,71 @@ function toolbox_setup() {
 }
 endif; // toolbox_setup
 
+
+
 /**
  * Tell WordPress to run toolbox_setup() when the 'after_setup_theme' hook is run.
  */
 add_action( 'after_setup_theme', 'toolbox_setup' );
+
+function theme_register_settings() {
+    register_setting('wpb_theme_options', 'wpb_options', 'wpb_validate_options');
+}
+ 
+
+function theme_options() {
+    add_theme_page('WP-Bootstrap Options', 'WP-Bootstrap Options', 'edit_theme_options', 'theme_options', 'theme_options_page');
+}
+ 
+add_action('admin_init', 'theme_register_settings');
+add_action('admin_menu', 'theme_options');
+
+function theme_options_page() {
+    global $sa_options, $sa_categories, $sa_layouts;
+ 
+    if ( ! isset( $_REQUEST['updated'] ) )
+    $_REQUEST['updated'] = false; // This checks whether the form has just been submitted. ?>
+ 
+    <div>
+ 
+    <?php screen_icon(); echo "<h2>" . get_current_theme() . __(' Theme Options') . "</h2>";
+    // This shows the page's name and an icon if one has been provided ?>
+ 
+    <?php if ( false !== $_REQUEST['updated'] ) : ?>
+    <div><p><strong><?php _e('Options saved'); ?></strong></p></div>
+    <?php endif; // If the form has just been submitted, this shows the notification ?>
+ 
+    <form method="post" action="options.php">
+ 
+	$default_options = array('copytxt' => '&copy; ' . date('Y') . ": " .  get_bloginfo('name'));
+    <?php $settings = get_option('wpb_options', $default_options ); ?>
+ 
+    <?php settings_fields('wpb_theme_options');
+    /* This function outputs some hidden fields required by the form,
+    including a nonce, a unique number used to ensure the form has been submitted from the admin page
+    and not somewhere else, very important for security */ ?>
+    <table> 
+    	<tr valign="top"><th scope="row"><label for="footer_copyright">Footer Copyright</label></th>
+    		<td>
+    			<input id="copytxt" name="wpb_options[copytxt]" type="text" value="<?php  esc_attr_e($settings['copytxt']); ?>" />
+    		</td>
+    	</tr> 
+    	<tr valign="top"><th scope="row"><label for="head_coded">Custom header code</label></th>
+    		<td>
+    			<textarea rows="10" name="wpb_options[headcode]" id="head_coded" style="width: 400px;"><?php  esc_attr_e($settings['headcode']); ?></textarea>
+    			<p>Can be used for code to add in the header - for example, Google Analytics.</p>
+    		</td>
+    	</tr> 
+    </table>
+    <p><input type="submit" value="Save Options" /></p> 
+    </form>
+    </div>
+    <?php
+}
+
+function wpb_validate_options($in) {
+	return $in;
+}
 
 /**
  * Set a default theme color array for WP.com.
