@@ -74,7 +74,7 @@ function theme_options_page() {
  
     <div>
  
-    <?php screen_icon(); echo "<h2>" . get_current_theme() . __(' Theme Options') . "</h2>";
+    <?php screen_icon(); echo "<h2 style='padding-top: 16px;'>" . get_current_theme() . __(' Theme Options') . "</h2>";
     // This shows the page's name and an icon if one has been provided ?>
  
     <?php if ( false !== $_REQUEST['updated'] ) : ?>
@@ -83,9 +83,10 @@ function theme_options_page() {
  
     <form method="post" action="options.php">
  
+    <?php 
 	$default_options = array('copytxt' => '&copy; ' . date('Y') . ": " .  get_bloginfo('name'));
-    <?php $settings = get_option('wpb_options', $default_options ); ?>
- 
+	$settings = get_option('wpb_options', $default_options ); ?>
+ 	<br />
     <?php settings_fields('wpb_theme_options');
     /* This function outputs some hidden fields required by the form,
     including a nonce, a unique number used to ensure the form has been submitted from the admin page
